@@ -39,7 +39,7 @@ Now you can browse Xenomai sources and observe in the folder xenomai-2.6/ksrc/ar
 3- Get Buildroot
 ================
 
-I am sure Buildroot may be used to automate the full process of patching/compiling but because RaspberryPi kernels have to be patched thrice in a particular order, I could not get it working with the last stable branch of Buildroot. Anyway, to find documentation about this project: https://buildroot.org/.
+I am sure Buildroot may be used to automate the full process of patching/compiling but because Raspberry Pi kernels have to be patched thrice in a particular order, I could not get it working with the last stable branch of Buildroot. Anyway, to find documentation about this project: https://buildroot.org/.
 ```
 git clone -b 2015.11.x git://git.buildroot.net/buildroot buildroot/
 ```
@@ -137,7 +137,7 @@ My SD card is mounted automatically at /media/kesaco/boot and /media/kesaco/root
 cp rpi-firmware/* zImage /media/kesaco/boot/
 tar -C /media/kesaco/rootfs/ -xvf rootfs.tar
 ```
-Before unmounting, you have to add the following to the cmdline.txt file (at the beginning of the line, all on the same line): "console=ttyAMA0,115200 init=/bin/sh " and then:
+Before unmounting, you have to add the following to the cmdline.txt file (at the beginning of the line, all on the same line): "`console=ttyAMA0,115200 init=/bin/sh `" and then:
 ```
 umount /media/kesaco/{boot,rootfs}
 ```
@@ -156,7 +156,8 @@ patch -p1 < $XENOMAI/ksrc/arch/arm/patches/ipipe-core-3.8.13-arm-4.patch
 patch -p1 < $XENOMAI/ksrc/arch/arm/patches/raspberry/ipipe-core-3.8.13-raspberry-post-2.patch
 ```
 Once the kernel is patched, we have to launch Xenomai "setup" script on thoses sources that way:
-```${XENOMAI}/scripts/prepare-kernel.sh --arch=arm --linux=$LINUX --adeos=${XENOMAI}/ksrc/arch/arm/patches/ipipe-core-3.8.13-arm-4.patch
+```
+${XENOMAI}/scripts/prepare-kernel.sh --arch=arm --linux=$LINUX --adeos=${XENOMAI}/ksrc/arch/arm/patches/ipipe-core-3.8.13-arm-4.patch
 ```
 
 A priori, everything is already set up in the kernel configuration, but some entries may corrupt Xenomai so we have to unselect them (to understand why, please refer to Xenomai official documentation). So finalize the kernel configuration this way:
