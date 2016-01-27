@@ -1,12 +1,12 @@
 # How to get a real-time Linux running on a Raspberry Pi using Buildroot
 
-We will use Xenomai and a RPi 1 because RPi 2 is not yet officially supported by Xenomai. The examples below uses RPi B but you could adjust the steps to any RPi of the same family.
+We will use Xenomai and a RPi 1 because RPi 2 is not yet officially supported by Xenomai. The examples below use RPi B but you could adjust the steps to any RPi of the same family.
 
 The best resources about Xenomai are obviously the http://xenomai.org website in its globality so I will not post the entire list of webpages I read to achieve my goal and write this memo, just take into account that I read them all.
 
-Xenomai offers two versions, the 2.0 which is now deprecated, and the 3.0 we should use. Unfortunately, I failed by installing the 3rd version and FYI, I did not find any example of the net of god people having installed it successfully. So this is a guide to install Xenomai 2.6 Cobalt core (ie. a dual kernel configuration).
+Xenomai offers two versions, the 2.0 which is now deprecated, and the 3.0 we should use. Unfortunately, I failed by installing the 3rd version and FYI, I did not find any example on the net of god people having installed it successfully. So this is a guide to install Xenomai 2.6 Cobalt core (ie. a dual kernel configuration).
 
-In this configuration, the hardware is abstracted by an Adeos/I-pipe layer. Above this, there are two concurrent kernels, Linux as always (not real-time) and Xenomai. Linux is completed by a standard userspace so we can have a standard shell and any utility we are used to work with. Xenomai is completed with "skins" that represent the API to use to create real-time tasks. Between both cores, there is an interrupt shield that filters signals between them in order to make sure that a non-real-time task will not be scheduled over a critical one.
+In this configuration, the hardware is abstracted by an Adeos/I-pipe layer. Above this, there are two concurrent kernels, Linux as always (not real-time) and Xenomai. Linux is completed by a standard userspace so we can get a standard shell and any utility we are used to work with. Xenomai is completed with "skins" that represent the API to use to create real-time tasks. Between both cores, there is an interrupt shield that filters signals between them in order to make sure that a non-real-time task will not be scheduled over a critical one.
 
 This is a step by step guide.
 
@@ -61,7 +61,7 @@ XENOMAI=${WORKDIR}/xenomai-2.6
 4- Produce the toolchains and the rootfs
 ========================================
 
-Buildroot has the same manner of Linux (and this is very appreciable) to deal with default configuration files. They are located in buildroot/configs/. We will use the raspberrypi_defconfig file as a base.
+Buildroot has the same manner of Linux (and this is very appreciable) to deal with default configuration files. They are located in buildroot/configs/. We will use the raspberrypi_defconfig file as a base (the menuconfig command needs the dev package of the ncurses library being installed on your host system):
 ```
 cd $BUILDROOT
 make raspberrypi_defconfig
